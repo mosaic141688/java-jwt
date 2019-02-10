@@ -113,6 +113,7 @@ public final class JWTCreator {
          * Add a specific Audience ("aud") claim to the Payload.
          *
          * @param audience the Audience value.
+         * 
          * @return this same Builder instance.
          */
         public Builder withAudience(String... audience) {
@@ -327,11 +328,11 @@ public final class JWTCreator {
     }
 
     private String sign() throws SignatureGenerationException {
-        String header = java.util.Base64.encode(headerJson.getBytes(StandardCharsets.UTF_8));
-        String payload = java.util.Base64.encode(payloadJson.getBytes(StandardCharsets.UTF_8));
+        String header = java.util.Base64.getEncoder().encode(headerJson.getBytes(StandardCharsets.UTF_8));
+        String payload = java.util.Base64.getEncoder().encode(payloadJson.getBytes(StandardCharsets.UTF_8));
 
         byte[] signatureBytes = algorithm.sign(header.getBytes(StandardCharsets.UTF_8), payload.getBytes(StandardCharsets.UTF_8));
-        String signature = java.util.Base64.encode((signatureBytes));
+        String signature = java.util.getEncoder().Base64.encode((signatureBytes));
 
         return String.format("%s.%s.%s", header, payload, signature);
     }
